@@ -70,3 +70,5 @@ module.exports = {
    loadNotes: loadNotes,
    saveNotes: saveNotes,
 };
+
+console.log(loadNotes());
