@@ -23,7 +23,7 @@ const getCatFacts1 = (factCount, callback) => {
       }
    });
 };
-getCatFacts(5, (error, facts) => {
+getCatFacts1(5, (error, facts) => {
    console.log(facts);
    console.log(error);
 });

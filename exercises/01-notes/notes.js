@@ -2,6 +2,19 @@ const fs = require("fs");
 const chalk = require("chalk");
 const path = require("path");
 
+//TODO - Refactoring separate ui communicate and app logic
+//TODO - test separate files
+//TODO - CLEAR
+// const clearList = () => {
+//    fs.writeFileSync("notes.json", "");
+//    try {
+//      const dataBuffer = fs.readFileSync("notes.json");
+//      const dataJSON = dataBuffer.toString();
+//      return JSON.parse(dataJSON);
+//    } catch (e) {
+//      return [];
+//    }
+//  };
 const listNotes = () => {
    const notes = loadNotes();
    console.log(chalk.inverse("Your Notes"));

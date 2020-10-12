@@ -1,19 +1,21 @@
 {
-  "name": "notes-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "chalk": "^4.1.0",
-    "validator": "^13.1.17",
-    "yargs": "^16.0.3"
-  },
-  "devDependencies": {
-    "jest": "^26.5.2"
-  }
+   "name": "notes-app",
+   "version": "1.0.0",
+   "description": "",
+   "main": "app.js",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
+      "axios": "^0.20.0",
+      "chalk": "^4.1.0",
+      "request": "^2.88.2",
+      "validator": "^13.1.17",
+      "yargs": "^16.0.3"
+   },
+   "devDependencies": {
+      "jest": "^26.5.2"
+   }
 }

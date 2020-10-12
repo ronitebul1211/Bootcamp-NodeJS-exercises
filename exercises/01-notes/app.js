@@ -22,6 +22,18 @@ yargs.command({
    },
    handler(argv) {
       notes.addNotes(argv.title, argv.body);
+      /**
+       try {
+         const notesArray = addNote("note 1", "note body 1") -> add or throw if exist
+         writeToFile(notesArray)  -> add or throw if didn't write 
+
+         log -> "note add"
+       } catch(e) {
+         error type exist ->  log -> "note exist"
+         error type cant write ->  keep throw
+       }
+      
+       */
    },
 });
 
