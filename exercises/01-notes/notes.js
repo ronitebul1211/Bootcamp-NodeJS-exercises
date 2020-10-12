@@ -1,5 +1,6 @@
 const fs = require("fs");
 const chalk = require("chalk");
+const path = require("path");
 
 const listNotes = () => {
    const notes = loadNotes();
@@ -48,13 +49,14 @@ const addNotes = (title, body) => {
 /** Save notes array has json in file */
 const saveNotes = (notes) => {
    const jsonData = JSON.stringify(notes);
-   fs.writeFileSync("notes.json", jsonData);
+   console.log(__dirname);
+   fs.writeFileSync(path.resolve(__dirname, "notes.json"), jsonData);
 };
 
 /** get notes array */
 const loadNotes = () => {
    try {
-      const dataBuffer = fs.readFileSync("notes.json");
+      const dataBuffer = fs.readFileSync(path.resolve(__dirname, "notes.json"));
       const dataJson = dataBuffer.toString();
       return JSON.parse(dataJson);
    } catch (error) {
@@ -70,5 +72,3 @@ module.exports = {
    loadNotes: loadNotes,
    saveNotes: saveNotes,
 };
-
-console.log(loadNotes());
