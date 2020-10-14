@@ -1,93 +1,75 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const ProductsList = require("./ProductsList").ProductsList;
+const UsersList = require("./UsersList").UsersList;
 
 const app = express();
 app.use(bodyParser.json());
 
-//TODO: septate logic of server behavior, data
+//DataModal
+const productsList = new ProductsList();
+const usersList = new UsersList();
 
-/*********************************************************   Products   **************************************************************************** */
-const products = [];
-let productIdCounter = 0;
-
-//GET
+//GET Products
 app.get("/products", (req, res) => {
-   res.send(products);
+   res.send(productsList.getProducts());
 });
 
-//CREATE
+//CREATE Product
 app.post("/product", (req, res) => {
    const productData = req.body;
    if (productData.title && productData.price && Object.keys(productData).length === 2) {
-      const newProduct = {
-         id: productIdCounter,
-         title: productData.title,
-         price: productData.price,
-      };
-      productIdCounter++;
-      products.push(newProduct);
+      const newProduct = productsList.addProduct(productData.title, productData.price);
       res.status(200);
-      res.json(newProduct);
+      res.send(newProduct);
    } else {
       throw new Error("Invalid product object: product should contain title and price properties");
    }
 });
 
-/*********************************************************   Users   **************************************************************************** */
-const users = [];
-let userIdCounter = 0;
-
-//GET
+//GET Users
 app.get("/users", (req, res) => {
-   res.send(users);
-});
-
-//UPDATE
-app.put("/user", (req, res) => {
-   const userId = req.query.id;
-   const userData = req.body;
-   if (userData.name || userData.age) {
-      let userIndex = users.findIndex((user) => parseInt(userId) === user.id);
-      if (userIndex === -1) {
-         throw new Error(`User id:${userId} is not exist`);
-      } else {
-         userData.name && (users[userIndex].name = userData.name);
-         userData.age && (users[userIndex].age = userData.age);
-         res.status(200);
-         res.send(users[userIndex]);
-      }
-   }
-});
-
-//DELETE
-app.delete("/user", (req, res) => {
-   const userId = req.query.id;
-   let userIndex = users.findIndex((user) => parseInt(userId) === user.id);
-
-   if (userIndex === -1) {
-      throw new Error(`User id:${userId} is not exist`);
-   } else {
-      const deletedUser = users.splice(userIndex, 1);
-      res.status(200);
-      res.send(`User with id:${deletedUser[0].id} deleted`);
-   }
+   res.send(usersList.getUsers());
 });
 
 //CREATE
 app.post("/user", (req, res) => {
    const userData = req.body;
    if (userData.name && userData.age && Object.keys(userData).length === 2) {
-      const newUser = {
-         id: userIdCounter,
-         name: userData.name,
-         age: userData.age,
-      };
-      userIdCounter++;
-      users.push(newUser);
+      const newUser = usersList.addUser(userData.name, userData.age);
       res.status(200);
       res.json(newUser);
    } else {
       throw new Error("Invalid user object: user should contain name and age properties");
+   }
+});
+
+//UPDATE User
+app.put("/user", (req, res) => {
+   const userId = req.query.id;
+   const userData = req.body;
+   if (userData.name && userData.age && Object.keys(userData).length === 2) {
+      const updatedUser = usersList.updateUser(userId, userData.name, userData.age);
+      if (!(typeof updatedUser === "undefined")) {
+         res.status(200);
+         res.send(updatedUser);
+      } else {
+         throw new Error("ID not exist");
+      }
+   } else {
+      throw new Error("Update with valid structure object container name, age properties");
+   }
+});
+
+//DELETE
+app.delete("/user", (req, res) => {
+   const userId = req.query.id;
+   let deletedUserId = usersList.deleteUser(userId);
+   if (!(typeof deletedUserId === "undefined")) {
+      res.status(200);
+      res.send(`User with id:${deletedUserId} deleted`);
+   } else {
+      throw new Error("ID not exist");
    }
 });
 
